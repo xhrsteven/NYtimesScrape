@@ -1,0 +1,28 @@
+{
+  "name": "NYtimesScrape",
+  "version": "1.0.0",
+  "description": "Node.js and MongoDB-based web app which enables users to read, save and add note to articles of The New York Times.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xhrsteven/NYtimesScrape.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xhrsteven/NYtimesScrape/issues"
+  },
+  "homepage": "https://github.com/xhrsteven/NYtimesScrape#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.3",
+    "mongoose": "^5.1.7",
+    "morgan": "^1.9.0"
+  }
+}
