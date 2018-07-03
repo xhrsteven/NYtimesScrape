@@ -1,4 +1,4 @@
-body {
+  body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -7,4 +7,45 @@ body {
   main {
     flex: 10 auto;
   }
-      
+
+  nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+  
+  .brand-logo {
+    margin-left: 10px;
+  }
+ 
+  header, main, footer {
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  div.col.s6.card-links {
+    padding: 0px;
+  }
+  
+  .sidenav-trigger {
+    color: #26a69a;
+  }
+  .parallax-container {
+    min-height: 200px;
+    line-height: 0;
+    height: auto;
+    color: rgba(34, 31, 31, 0.9);
+    margin-bottom: 15px;
+  }
+  /* .header.center {
+    background-color: rgb(240, 224, 224);
+  } */
+  
+
+  @media only screen and (max-width : 450px) {
+    .parallax-container {
+      /* position: absolute; */
+      min-height: 100px;    
+    }
+    
+    
+  }

@@ -11,9 +11,9 @@
         </div>
         <br><br>
         <div class="parallax">
-            <video autoplay>
-                <source src="/public/assets/images/sports-background.mp4">
-            </video>
+            {{!-- <video autoplay>
+                <source src="/assets/images/sports-background.mp4">
+            </video> --}}
         {{!-- <img src="/assets/images/background.jpg"  style="display: block;"> --}}
         </div>
         </div>
@@ -26,7 +26,7 @@
         <div class="col s12">
             <div class="col s8">
                 <div class="card grey lighten-1">
-                    <div class="card-content white-text">
+                    <div class="card-content black-text">
                             <span class="card-title">{{this.title}}</span>
                             <p>{{this.summary}}</p>
                     </div>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="col s6 card-links">
-            <div class="card-action valign-wrapper center-align grey lighten-1 white-text">
+            <div class="card-action valign-wrapper center-align grey lighten-1 black-text">
                 <a href={{this.link}} class="white-text" target="_blank"><button class="btn">View Article</button></a>
             </div>
         </div>
@@ -46,4 +46,5 @@
             <button data-dbid="{{this._id}}" class="btn save-article-button">Save Article</button>
           </div>
     </div>
+    {{/each}}
 </div>

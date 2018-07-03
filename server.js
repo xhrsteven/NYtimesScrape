@@ -40,7 +40,7 @@ mongoose.connect(MONGODB_URI);
 
 // A Get route for home page
 app.get('/', function(req, res){
-    db.Article.find({}, {sort: {'_id': -1}}, function (err, data) {
+    db.Article.find({}, function (err, data) {
         if(err) throw err;
         res.render('home', {articleData: data});
     });
@@ -48,7 +48,7 @@ app.get('/', function(req, res){
 
 //Saved page where save is true and render saved handlebars
 app.get('/saved', function(req,res){
-    db.Article.find({save: true}, {sort: {'_id': -1}}, function(err, data){
+    db.Article.find({save: true}, function(err, data){
         if (err) throw err;
         res.render('saved', {articleData: data});
     });
