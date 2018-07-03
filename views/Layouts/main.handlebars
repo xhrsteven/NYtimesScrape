@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- favicon -->
+        <link rel="shortcut icon" href="assets/images/Times-T-logo.jpg" type="favicon.jpg">
+        <!-- custom css -->
+        <link rel="stylesheet" href="/assets/css/style.css" type="text/css"> 
+        <title>NYTimes Sports</title>    
+    </head>
+
+    <body>
+        {{!-- nav bar --}}
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#!" class="brand-logo">Logo</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">Menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="/"><i class="material-icons">home</i>Home</a></li>
+                    <li><a href="/saved"><i class="material-icons">save</i>Saved Articles</a></li>
+                    <li><a href="/scrape"><i class="material-icons">add</i>Scrape New Articles</a></li>
+                </ul>
+            </div>
+        </nav>
+        <ul class="sidenav" id="mobile-demo">
+            <li><a href="/">Home</a></li>
+            <li><a href="/saved">Saved Articles</a></li>
+            <li><a href="/scrape">Scrape New Articles</a></li>
+        </ul>
+    </header>
+
+    <main>
+        {{{ body }}}
+    </main>
+
+
+    <footer>
+
+        <div class="footer-copyright">
+            <div class="container">
+            © 2018 Copyright Steven Xu
+            <a class="grey-text text-lighten-4 right" href="https://github.com/xhrsteven">Reference Works</a>
+            </div>
+          </div>
+    </footer>
+
+      <!--JavaScript at end of body for optimized loading-->
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+         <script src="/assets/js/app.js"></script>
+    </body>
+  </html>
