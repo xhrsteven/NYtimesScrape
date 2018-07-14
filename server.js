@@ -11,7 +11,7 @@ var path =require('path');
 var request =require('request');
 var cheerio = require('cheerio');
 
-var db= require(path.resolve('__dirname','./models'));
+var db= require('./models');
 
 var PORT = process.env.PORT || 8080;
 
