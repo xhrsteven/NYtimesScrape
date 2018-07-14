@@ -7,7 +7,7 @@ var exphbs = require('express-handlebars');
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
 // It works on the client and on the server
-var axios =require('axios');
+var request =require('request');
 var cheerio = require('cheerio');
 
 var db= require('./models');
@@ -48,49 +48,45 @@ app.get('/', function(req, res){
 
 //Saved page where save is true and render saved handlebars
 app.get('/saved', function(req,res){
-    db.Article.find({save: true}, function(err, data){
+    db.Article.find({saved: true}, function(err, data){
         if (err) throw err;
         res.render('saved', {articleData: data});        
     });
 });
 
 // Route for scraping data
-app.get('/scrape', function(req, res){
-    // db.Article.find({}, function(err, currentArticle){
-    //     if(err) throw err;
-    //     var currentArticleTitles = [];
-    //     for(var i =0; i<currentArticle.length; i++){
-    //         currentArticleTitles.push(currentArticle[i].title);
-    //     }
-    // })
-    // First, we grab the body of the html with axios
-    axios.get('https://www.nytimes.com/section/world')
-        .then(function(response){
-            //Then, we load that into cheerio and save it to $ for a shorthand selector
-            var $ = cheerio.load(response.data);
-            $("article.story.theme-summary").each(function(i, element){
-                var result = {};
-                result.title = $(element).children('h2').text().trim();
-                result.summary = $(element).children('p').text().trim();
-                result.link = $(element).find('a').attr('href');
-                result.image = $(element).find('img').data('src');
-                // if($(element).find('img').data('src')){
-                //     result.image = $(element).find('img').data('src');
-                // }else if($(element).find('img').attr('src')){
-                //     result.image = $(element).find('img').attr('src');
-                // };
+app.get('/scrape',function(req, res){
+    db.Article.find({}, function(err,CurrentArticles){
+        if(err) throw err;
+        var CurrentArticleTitles =[];
+        for(var i=0; i< CurrentArticles.length; i++){
+            CurrentArticleTitles.push(CurrentArticles[i].title);
+        }
 
-                //Create articles using result object
-                db.Article.create(result)
-                    .then(function(dbArticle){
-                    console.log(dbArticle);
-                    })
-                    .catch(function(err){
-                        return res.json(err);
-                    })
-            });
-        res.redirect('/');
-        })
+        //grab html
+        request('http://www.nytimes.com/section/world', function(err,response, html){
+            var $ = cheerio.load(html);
+            $('li article').each(function(i, element){
+                var result = {};
+                if(CurrentArticleTitles.indexOf($(element).find('h2')) === -1){
+                    result.title = $(element).find('h2').text().trim();
+                    result.summary =$(element).find('p.summary').text().trim();
+                    result.link = $(element).find('a').attr('href');
+                    result.image = $(element).find('img').attr('src');
+                    //create new article 
+                    db.Article.create(result)
+                        .then(function(dbArticle){
+                        console.log(dbArticle);
+                         })
+                        .catch(function(err){
+                            return res.json(err);
+                        })    
+                };    
+            })
+             //when successfully scape redirect to home
+            res.redirect('/')   
+        });
+    })
 })
 
 // Route for updating articles in db for saved/unsaved
