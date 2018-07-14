@@ -2,6 +2,7 @@
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    background: #e8ecee;
   }
 
   main {
@@ -25,20 +26,23 @@ nav .brand-logo {
   div.col.s6.card-links {
     padding: 0px;
   }
-  
+  .card-content {
+    margin-top: 20px;
+  }
+ 
   .sidenav-trigger {
-    color: #26a69a;
+    color: #4a28e6;
   }
   .parallax-container {
     min-height: 200px;
     line-height: 0;
     height: auto;
-    color: rgba(34, 31, 31, 0.9);
+    color: rgba(87, 52, 214, 0.9);
+    font-weight: bold;
     margin-bottom: 15px;
+    background-image: url("/assets/images/background.jpg")
   }
-  /* .header.center {
-    background-color: rgb(240, 224, 224);
-  } */
+ 
   
 
   @media only screen and (max-width : 450px) {

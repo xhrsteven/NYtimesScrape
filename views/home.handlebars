@@ -2,44 +2,42 @@
     <div class="section no-pad-bot">
         <div class="container">
             <br><br>
-        <h1 class="header center teal-text text-lighten-2">The New York Times Scraper</h1>
+        <h1 class="header center blue-grey-text text-lighten-5">The New York Times Scraper</h1>
         <div class="row center">
-          <h5 class="header col s12 light">A responsive scraper for sports articles of The New York Times</h5>
+          <h5 class="header col s12 blue-grey-text text-lighten-5">A responsive scraper for sports articles of The New York Times</h5>
         </div>
         <div class="row center">
           <a href="/scrape" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Get Started</a>
+          {{!-- <img src="/assets/images/background.jpg" alt="newyorktimes" style="display:block;"> --}}
         </div>
         <br>
         </div>
     </div>
-    <div class="parallax"><img src="background.jpg" alt="newyorktimes"></div>
-</div>
+</div><hr />
 
 <div class="container ">
     {{#each articleData}}
     <div class="row">
-        <div class="col s12">
+        <div class="card grey lighten-5 col s12">
             <div class="col s8">
-                <div class="card grey lighten-5">
                     <div class="card-content black-text">
                             <span class="card-title">{{this.title}}</span><hr />
                             <p>{{this.summary}}</p>
                     </div>
-                </div>
             </div>
-            <div class="col s4">
+            <div class="card col s4">
                 <img class="responsive-img" src="{{this.image}}" alt="article image">
             </div>
-        </div>
-
-        <div class="col s6 center-align card-links ">
-            <div>
-                <a href={{this.link}} class="white-text" target="_blank"><button class="btn">View Article</button></a>
+            <div class="col s6 center-align card-links  ">
+                <div>
+                    <a href={{this.link}} class="white-text" target="_blank"><button class="btn">View Article</button></a>
+                </div>
             </div>
+            <div class="col s6 center-align card-links">
+                <button data-dbid="{{this._id}}" class="btn save-article-btn">Save Article</button>
+            </div>   
         </div>
-        <div class="col s6 center-align card-links">
-            <button data-dbid="{{this._id}}" class="btn save-article-btn">Save Article</button>
-          </div>
+                 
     </div>
     {{/each}}
 </div>

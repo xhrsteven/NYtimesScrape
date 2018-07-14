@@ -102,7 +102,7 @@ app.post('/articles/:id', function(req,res){
     //Create new comment and pass req.body to the entry
     db.Comment.create(req.body)
         .then(function(dbComment){
-            return db.Article.findOneAndUpdate({_id: req.params.id}, {$push: {comments: dbComment._id}}, {new: true});
+            return db.Article.findOneAndUpdate({_id: req.params.id},  {comment: dbComment._id}, {new: true});
         })
         .then(function(dbArticle){
             res.json(dbArticle);
@@ -114,8 +114,8 @@ app.post('/articles/:id', function(req,res){
 
 //Route for grabbing specific article by id
 app.get('/articles/:id', function(req,res){
-    db.Article.find({_id: req.params.id})
-    .populate('comments')
+    db.Article.findOne({_id: req.params.id})
+    .populate('comment')
     .then(function(dbArticle){
         res.json(dbArticle)
     })
