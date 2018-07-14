@@ -40,16 +40,16 @@ $(document).ready(function(){
       url: '/articles/'+dbId
     })
     .done(function(data){
-      console.log(data[0]);
-      $(".modal-title").html(data[0].title);
-      // $('.comment-display-root').empty();
-      $('.save-comment-button').data('dbid',data[0]._id);
-      if(data[0].comment.length === 0 ){
+      console.log(data);
+      $(".modal-title").html(data.title);
+      $('.comment-display-root').empty();
+      $('.save-comment-button').data('dbid',data._id);
+      if(data.comment.length === 0 ){
         $('.comment-display-root').html('No comment yet, please leave the first comment!')
       }else{
-        for(var i=0; i<data[0].comment.length; i++){
-          var newCard = "<div class='card blue-grey darken-1'><div class='card-content'><p class='col s10 left-align'>" + data[0].comment[i].body
-          +"</p><button class='col s1 btn delete-comment-button' data-dbid='" + data[0].comment[i]._id + "'>X</button></div></div>";
+        for(var i=0; i<data.comment.length; i++){
+          var newCard = "<div class='card blue-grey darken-3'><div class='card-content'><p class='col s10 left-align'>" + data.comment[i].body
+          +"</p><button class='col s1 btn delete-comment-button' data-dbid='" + data.comment._id + "'>X</button></div></div>";
 
           $('.comment-display-root').prepend(newCard);
         }
@@ -70,7 +70,7 @@ $(document).ready(function(){
     })
     .done(function(data){
       console.log(data);
-      // $(this).html('Comment Saved');
+      $(this).html('Comment Saved');
       $('#comment-input').val('');
     })
   });
