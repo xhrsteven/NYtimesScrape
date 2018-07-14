@@ -9,13 +9,7 @@
         <div class="row center">
           <a href="/scrape" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Get Started</a>
         </div>
-        <br><br>
-        <div class="parallax">
-            {{!-- <video autoplay>
-                <source src="/assets/images/sports-background.mp4">
-            </video> --}}
-        {{!-- <img src="/assets/images/background.jpg"  style="display: block;"> --}}
-        </div>
+        <br>
         </div>
     </div>
 </div>
@@ -33,17 +27,17 @@
                 </div>
             </div>
             <div class="col s4">
-                <img class="responsive-img" src="{{this.image}}" alt="article image">
+                <img src="{{this.image}}" alt="article image">
             </div>
         </div>
 
         <div class="col s6 card-links">
-            <div class="card-action valign-wrapper center-align grey lighten-1 black-text">
+            <div>
                 <a href={{this.link}} class="white-text" target="_blank"><button class="btn">View Article</button></a>
             </div>
         </div>
-        <div class="col s6 card-links save-article-div">
-            <button data-dbid="{{this._id}}" class="btn save-article-button">Save Article</button>
+        <div class="col s6 card-links">
+            <button data-dbid="{{this._id}}" class="btn">Save Article</button>
           </div>
     </div>
     {{/each}}

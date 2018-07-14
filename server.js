@@ -50,35 +50,35 @@ app.get('/', function(req, res){
 app.get('/saved', function(req,res){
     db.Article.find({save: true}, function(err, data){
         if (err) throw err;
-        res.render('saved', {articleData: data});
+        res.render('saved', {articleData: data});        
     });
 });
 
 // Route for scraping data
 app.get('/scrape', function(req, res){
-    db.Article.find({}, function(err, currentArticle){
-        if(err) throw err;
-        var currentArticleTitles = [];
-        for(var i =0; i<currentArticle.length; i++){
-            currentArticleTitles.push(currentArticle[i].title);
-        }
-    })
+    // db.Article.find({}, function(err, currentArticle){
+    //     if(err) throw err;
+    //     var currentArticleTitles = [];
+    //     for(var i =0; i<currentArticle.length; i++){
+    //         currentArticleTitles.push(currentArticle[i].title);
+    //     }
+    // })
     // First, we grab the body of the html with axios
-    axios.get('https://www.nytimes.com/section/sports?module=SectionsNav&action=click&version=BrowseTree&region=TopBar&contentCollection=Sports&pgtype=Homepage')
-    .then(function(response){
+    axios.get('https://www.nytimes.com/section/world')
+        .then(function(response){
             //Then, we load that into cheerio and save it to $ for a shorthand selector
             var $ = cheerio.load(response.data);
-            $('article').each(function(i, element){
+            $("article.story.theme-summary").each(function(i, element){
                 var result = {};
-                result.title = $(element).data('title');
-                result.summary = $(element).find('h2').text();
-                result.link = $(element).data('url');
-                result.image = '';
-                if($(element).find('img').data('src')){
-                    result.image = $(element).find('img').data('src');
-                }else if($(element).find('img').attr('src')){
-                    result.image = $(element).find('img').attr('src');
-                };
+                result.title = $(element).children('h2').text().trim();
+                result.summary = $(element).children('p').text().trim();
+                result.link = $(element).find('a').attr('href');
+                result.image = $(element).find('img').data('src');
+                // if($(element).find('img').data('src')){
+                //     result.image = $(element).find('img').data('src');
+                // }else if($(element).find('img').attr('src')){
+                //     result.image = $(element).find('img').attr('src');
+                // };
 
                 //Create articles using result object
                 db.Article.create(result)
@@ -89,7 +89,7 @@ app.get('/scrape', function(req, res){
                         return res.json(err);
                     })
             });
-        res.redirct('/');
+        res.redirect('/');
         })
 })
 
