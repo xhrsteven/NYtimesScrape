@@ -1,112 +1,95 @@
-
 $(document).ready(function(){
-  $('.button-collapse').sidenav();
+  // materialize nav bar collapse functionality
+  $('.button-collapse').sideNav();
 
+  // materialize modal functionality
   $('.modal').modal();
-//save articles
-  $('.save-article-btn').on('click', function(){
-    var dbId = $(this).data('dbid');
 
+  $('.save-article-btn').on('click', function() {
+    // grab _id from saved data attribute
+    var dbId = $(this).data('dbid');
+    // ajax put method to articles/_id
+    // send data { saved: true } back
     $.ajax({
-      method: 'GET',
-      url:"/articles/save/"+dbId,
-      data: {saved: true}
-    })
-    .done(function(data){
+      method: "PUT",
+      url: "/articles/" + dbId,
+      data: { saved: true }
+      // when done, log it
+    }).done(function(data) {
       console.log(data);
     });
-
-    $(this).html('Article saved');
+    // update button html to article saved
+    $(this).html("Article saved");
   });
-
-  $('.delete-from-saved-button').on('click', function(){
+  
+  // when delete from saved is clicked, update db to change saved to false
+  $('.delete-from-saved-button').on('click', function() {
     var dbId = $(this).data('dbid');
-
+    // ajax put method to articles/_id
+    // send data { saved: false } back
     $.ajax({
-      method:'DELETE',
-      url:'/articles/deleteArticle/'+dbId,
-      data: {saved: false}
-    })
-    .done(function(data){
+      method: "PUT",
+      url: "/articles/" + dbId,
+      data: { saved: false }
+    }).done(function(data) {
+      // when done, reload page so article is removed from saved page
       location.reload();
     })
   });
 
-  $('.view-comments-button').on('click',function(){
+  // when view comments is clicked, pull in comments from db with ajax get req to articles/_id
+  $('.view-comments-button').on('click', function() {
     var dbId = $(this).data('dbid');
-    $('#comment-input').val('');
+    $("#comment-input").val('');
     $.ajax({
-      method:'GET',
-      url: '/comments/getComment'+dbId
-    })
-    .done(function(data){
+      method: "GET",
+      url: "/articles/" + dbId
+      // then, populate title, empty commend display root, add dbid attr to save comment button based on article dbid
+      // then, if no comments exists, populate no comments message. if comments exists, populate a card for each comment
+    }).done(function(data){
       console.log(data);
-      $(".modal-title").html(data.title);
+      $('.modal-title').html(data.title);
       $('.comment-display-root').empty();
-      $('.save-comment-button').data('dbid',data._id);
-      if(data.comment.length === 0 ){
-        $('.comment-display-root').html('No comment yet, please leave the first comment!')
-      }else{
-        for(var i=0; i<data.comment.length; i++){
-          var newCard = "<div class='card white-grey darken-5'><div class='card-content'><p class='col s10 left-align'>" + data.comment[i].body
-          +"</p><button class='col s2 btn delete-comment-button' data-dbid='" + data.comment[0]._id + "'>X</button></div></div>";
-
+      $('.save-comment-button').data('dbid', data._id);
+      if (data.comments.length === 0) {
+        $('.comment-display-root').html("No comments yet. Be the first to comment!");
+      } else {
+        for (var i = 0; i < data.comments.length; i++) {
+          var newCard = 
+            "<div class='card blue-grey darken-1'><div class='card-content white-text valign-wrapper'><p class='col s11 left-align'>" 
+            + data.comments[i].body + "</p><button class='col s1 btn delete-comment-button' data-dbid='" + data.comments[i]._id + "'>X</button></div></div>";
           $('.comment-display-root').prepend(newCard);
         }
       }
-    })
+    });
   });
 
   // when save comment is clicked, add comment to db
-  $('.save-comment-button').on('click', function(){
+  $('.save-comment-button').on('click', function() {
     var dbId = $(this).data('dbid');
-
+    // grab id from data attr, use ajax post method to send comment from text-input val to the article
     $.ajax({
-      method:'POST',
-      url:'/comments/createComment'+dbId,
-      data:{
-        body: $('#comment-input').val()
+      method: "POST",
+      url: "/articles/" + dbId,
+      data: {
+        body: $("#comment-input").val()
       }
-    })
-    .done(function(data){
+      // then log it and empty the input box
+    }).done(function(data) {
       console.log(data);
-      $(this).html('Comment Saved');
-      // $('#comment-input').val('');
+      $(this).html("Comment Saved")
     })
   });
 
-  $('.delete-comment-button').on('click',function(){
+  // when delete comment button is clicked, remove the button
+  $(document).on('click', '.delete-comment-button', function() {
     var dbId = $(this).data('dbid');
-
     $.ajax({
-      method:'DELETE',
-      url:'/comments/deleteComment',
-      data: dbId
-    })
-    .done(function(data){
+      method: "DELETE",
+      url: "comments/" + dbId
+    }).done(function(data) {
       console.log(data);
       location.reload();
     })
-  })
-
-
-  $('#download-button').on('click',function(e){
-    e.preventDefault();
-    $.ajax({
-      url:'/scape/newArticles',
-      method: 'GET'
-    })
-  })
-})
-
-//Side Nav bar
- document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.sidenav');
-    // var instances = M.Sidenav.init(elems, options);
   });
-
-  // Or with jQuery
-
-  $(document).ready(function(){
-    $('.sidenav').sidenav();
-  });
+});
