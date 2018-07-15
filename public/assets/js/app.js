@@ -1,6 +1,6 @@
 $(document).ready(function(){
   // materialize nav bar collapse functionality
-  $('.button-collapse').sideNav();
+  // $('.button-collapse').sideNav();
 
   // materialize modal functionality
   $('.modal').modal();
