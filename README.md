@@ -14,3 +14,6 @@ Node.js and MongoDB-based web app which enables users to read, save and add note
 - [Materialize](http://materializecss.com/)
 - [Cheerio](https://www.npmjs.com/package/cheerio)
 - HTML5, CSS3, Javascript
+
+## Screen shot
+![Screen shot](/public/assets/images/screenshot.PNG)
