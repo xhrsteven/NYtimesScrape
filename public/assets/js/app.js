@@ -3,13 +3,13 @@ $(document).ready(function(){
   $('.button-collapse').sidenav();
 
   $('.modal').modal();
-
+//save articles
   $('.save-article-btn').on('click', function(){
     var dbId = $(this).data('dbid');
 
     $.ajax({
-      method: 'PUT',
-      url:"/articles/"+dbId,
+      method: 'GET',
+      url:"/articles/save/"+dbId,
       data: {saved: true}
     })
     .done(function(data){
@@ -23,9 +23,9 @@ $(document).ready(function(){
     var dbId = $(this).data('dbid');
 
     $.ajax({
-      method:'PUT',
-      url:'/articles/'+dbId,
-      data: {saved:false}
+      method:'DELETE',
+      url:'/articles/deleteArticle/'+dbId,
+      data: {saved: false}
     })
     .done(function(data){
       location.reload();
@@ -37,7 +37,7 @@ $(document).ready(function(){
     $('#comment-input').val('');
     $.ajax({
       method:'GET',
-      url: '/articles/'+dbId
+      url: '/comments/getComment'+dbId
     })
     .done(function(data){
       console.log(data);
@@ -48,8 +48,8 @@ $(document).ready(function(){
         $('.comment-display-root').html('No comment yet, please leave the first comment!')
       }else{
         for(var i=0; i<data.comment.length; i++){
-          var newCard = "<div class='card blue-grey darken-3'><div class='card-content'><p class='col s10 left-align'>" + data.comment[i].body
-          +"</p><button class='col s1 btn delete-comment-button' data-dbid='" + data.comment._id + "'>X</button></div></div>";
+          var newCard = "<div class='card white-grey darken-5'><div class='card-content'><p class='col s10 left-align'>" + data.comment[i].body
+          +"</p><button class='col s2 btn delete-comment-button' data-dbid='" + data.comment[0]._id + "'>X</button></div></div>";
 
           $('.comment-display-root').prepend(newCard);
         }
@@ -63,7 +63,7 @@ $(document).ready(function(){
 
     $.ajax({
       method:'POST',
-      url:'/articles/'+dbId,
+      url:'/comments/createComment'+dbId,
       data:{
         body: $('#comment-input').val()
       }
@@ -71,7 +71,7 @@ $(document).ready(function(){
     .done(function(data){
       console.log(data);
       $(this).html('Comment Saved');
-      $('#comment-input').val('');
+      // $('#comment-input').val('');
     })
   });
 
@@ -80,7 +80,8 @@ $(document).ready(function(){
 
     $.ajax({
       method:'DELETE',
-      url:'/comments/'+dbId,
+      url:'/comments/deleteComment',
+      data: dbId
     })
     .done(function(data){
       console.log(data);
@@ -89,6 +90,13 @@ $(document).ready(function(){
   })
 
 
+  $('#download-button').on('click',function(e){
+    e.preventDefault();
+    $.ajax({
+      url:'/scape/newArticles',
+      method: 'GET'
+    })
+  })
 })
 
 //Side Nav bar
